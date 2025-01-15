@@ -1,0 +1,98 @@
+# https://docs.astral.sh/uv/reference/settings/
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+
+# PROJECT
+
+[project]
+name = "mlops-digester"
+version = "0.1.0"
+description = "Let your agent digest MLOps information"
+authors = [{ name = "fmind" }]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+license = { file = "LICENSE.txt" }
+keywords = ["mlops", "python", "package"]
+
+# LINKS
+
+[project.urls]
+Homepage = "https://github.com/fmind/mlops-digester"
+Documentation = "https://fmind.github.io/mlops-digester/"
+Repository = "https://github.com/fmind/mlops-digestere"
+"Bug Tracker" = "https://github.com/fmind/mlops-digester/issues"
+Changelog = "https://github.com/fmind/mlops-digester/blob/main/CHANGELOG.md"
+
+# SCRIPTS
+
+[project.scripts]
+mlops-digester = "mlops_digester.scripts:main"
+
+# DEPENDENCIES
+
+[dependency-groups]
+checks = [
+    "bandit>=1.8.0",
+    "coverage>=7.6.8",
+    "mypy>=1.13.0",
+    "pytest-cov>=6.0.0",
+    "pytest-mock>=3.14.0",
+    "pytest-xdist>=3.6.1",
+    "pytest>=8.3.3",
+    "ruff>=0.8.1",
+]
+commits = ["commitizen>=4.0.0", "pre-commit>=4.0.1"]
+dev = ["invoke>=2.2.0"]
+docs = ["pdoc>=15.0.0"]
+notebooks = ["ipykernel>=6.29.5", "nbformat>=5.10.4"]
+
+# TOOLS
+
+[tool.uv]
+default-groups = ["checks", "commits", "dev", "docs", "notebooks"]
+
+[tool.bandit]
+targets = ["src"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = ["__main__.py"]
+
+[tool.mypy]
+pretty = true
+python_version = "3.12"
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--verbosity=2"
+pythonpath = ["src"]
+
+[tool.ruff]
+fix = true
+indent-width = 4
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["D100", "D103"]
+
+# SYSTEMS
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
