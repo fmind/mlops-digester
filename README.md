@@ -21,3 +21,20 @@ uv sync
 ```bash
 uv run mlops-digester
 ```
+
+# Notes
+
+- Installation: https://ai.pydantic.dev/install/
+  - slim install: https://ai.pydantic.dev/install/#slim-install
+    - packages to install
+- Troubleshooting: https://ai.pydantic.dev/troubleshooting/
+  - jupyter event loop: https://ai.pydantic.dev/troubleshooting/
+- Multiple agent delegation: https://ai.pydantic.dev/multi-agent-applications/
+- Graph: https://ai.pydantic.dev/graph/#mermaid-diagrams
+  - Super complex (similar to LangGraph), too complex for this use case
+
+# Limitations
+
+- Advanced foundation models features
+  - e.g., Gemini 2.0 (audio, live API, ...)
+- Streaming challenges: https://ai.pydantic.dev/results/#streaming-structured-responses

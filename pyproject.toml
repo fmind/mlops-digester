@@ -10,7 +10,12 @@ description = "Let your agent digest MLOps information"
 authors = [{ name = "fmind" }]
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "loguru>=0.7.3",
+    "pydantic-ai-slim[logfire,openai]>=0.0.19",
+    "pydantic-settings>=2.7.1",
+    "slack-sdk>=3.34.0",
+]
 license = { file = "LICENSE.txt" }
 keywords = ["mlops", "python", "package"]
 
@@ -42,7 +47,10 @@ checks = [
     "ruff>=0.8.1",
 ]
 commits = ["commitizen>=4.0.0", "pre-commit>=4.0.1"]
-dev = ["invoke>=2.2.0"]
+dev = [
+    "invoke>=2.2.0",
+    "nest-asyncio>=1.6.0",
+]
 docs = ["pdoc>=15.0.0"]
 notebooks = ["ipykernel>=6.29.5", "nbformat>=5.10.4"]
 
