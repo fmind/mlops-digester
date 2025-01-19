@@ -1,15 +1,17 @@
 """Grant access to foundation models."""
 
-# https://ai.pydantic.dev/models/
-
 # %% IMPORTS
 
 from pydantic_ai.models.openai import OpenAIModel
 
+from mlops_digester import settings
+
 # %% MODELS
 
-openai_model = OpenAIModel(model_name="gpt-4o-mini")
 
-# %% DEFAULTS
-
-default_model = openai_model
+def to_openai_model(openai_model_settings: settings.OpenAIModelSettings) -> OpenAIModel:
+    """Create an OpenAI model from settings."""
+    return OpenAIModel(
+        model_name=openai_model_settings.model_name,
+        api_key=openai_model_settings.api_key.get_secret_value(),
+    )

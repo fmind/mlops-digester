@@ -16,6 +16,13 @@ Use the package manager [uv](https://docs.astral.sh/uv/):
 uv sync
 ```
 
+# Preparation
+
+```bash
+uv run logfire auth
+uv run logire projects new
+```
+
 # Usage
 
 ```bash
@@ -33,8 +40,15 @@ uv run mlops-digester
 - Graph: https://ai.pydantic.dev/graph/#mermaid-diagrams
   - Super complex (similar to LangGraph), too complex for this use case
 
+# Ideas
+
+- Sent a digest per channel or to the user on Slack?
+- Create a Slack AI Assistant: https://api.slack.com/docs/apps/ai
+
 # Limitations
 
+- Configuration at the distance
+  - must wrap agents in function, not pydantic ai idiomatic
 - Advanced foundation models features
   - e.g., Gemini 2.0 (audio, live API, ...)
 - Streaming challenges: https://ai.pydantic.dev/results/#streaming-structured-responses
