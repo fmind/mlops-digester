@@ -11,6 +11,7 @@ authors = [{ name = "fmind" }]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "gradio>=5.12.0",
     "loguru>=0.7.3",
     "pydantic-ai-slim[logfire,openai]>=0.0.19",
     "pydantic-settings>=2.7.1",
@@ -33,6 +34,9 @@ Changelog = "https://github.com/fmind/mlops-digester/blob/main/CHANGELOG.md"
 [project.scripts]
 mlops-digester = "mlops_digester.scripts:main"
 
+[project.gui-scripts]
+mlops-digester-gui = "mlops_digester.interfaces:main"
+
 # DEPENDENCIES
 
 [dependency-groups]
@@ -47,10 +51,7 @@ checks = [
     "ruff>=0.8.1",
 ]
 commits = ["commitizen>=4.0.0", "pre-commit>=4.0.1"]
-dev = [
-    "invoke>=2.2.0",
-    "nest-asyncio>=1.6.0",
-]
+dev = ["invoke>=2.2.0"]
 docs = ["pdoc>=15.0.0"]
 notebooks = ["ipykernel>=6.29.5", "nbformat>=5.10.4"]
 

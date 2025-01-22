@@ -9,11 +9,17 @@ from invoke.tasks import task
 
 
 @task
-def run(ctx: Context) -> None:
-    """Run the project for the given job file."""
+def cli(ctx: Context) -> None:
+    """Run the project command line interface."""
     ctx.run(f"uv run {ctx.project.repository}")
 
 
-@task(pre=[run], default=True)
+@task
+def gui(ctx: Context) -> None:
+    """Run the project graphical user interface."""
+    ctx.run(f"uv run {ctx.project.repository}-gui", pty=True)
+
+
+@task(pre=[cli], default=True)
 def all(_: Context) -> None:
     """Run all run tasks."""

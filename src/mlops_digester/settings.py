@@ -18,7 +18,7 @@ class LoguruServiceSettings(pdts.BaseSettings):
 
     level: str = "DEBUG"
     colorize: bool = True
-    serialize: bool = True
+    serialize: bool = False
 
 
 class LogfireServiceSettings(pdts.BaseSettings):

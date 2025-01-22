@@ -8,7 +8,7 @@ import pydantic as pdt
 
 
 class SlackThreadDigest(pdt.BaseModel):
-    """Digest of a slack thread."""
+    """Digest of a Slack thread."""
 
     title: str
     summary: str
@@ -19,7 +19,7 @@ class SlackThreadDigest(pdt.BaseModel):
 
 
 class SlackWorkspaceDigest(pdt.BaseModel):
-    """Digest of a slack workspace."""
+    """Digest of a Slack workspace."""
 
     tops: list[str]
     flops: list[str]

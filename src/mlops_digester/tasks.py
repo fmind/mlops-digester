@@ -6,6 +6,7 @@ import datetime
 import typing as T
 
 import slack_sdk as slack
+import slack_sdk.errors as slack_errors
 from loguru import logger
 
 from mlops_digester import agents, clients, depends, models, services, settings
@@ -34,9 +35,9 @@ def fetch_slack_content(
     slack_channels = {}
     if fetch_slack_content_step_settings.channels:
         logger.debug(f"Fetching Slack Channels: {fetch_slack_content_step_settings.channels}")
-        for channel_id in fetch_slack_content_step_settings.channels:
-            logger.debug(f"Fetching Slack Channel: {channel_id}")
-            slack_channel_result = slack_client.conversations_info(channel=channel_id)
+        for slack_channel_id in fetch_slack_content_step_settings.channels:
+            logger.debug(f"Fetching Slack Channel: {slack_channel_id}")
+            slack_channel_result = slack_client.conversations_info(channel=slack_channel_id)
             slack_channel = slack_channel_result["channel"]  # extract channel data
             logger.debug(f"Fetched Slack Channel: {slack_channel_result['ok']}")
             logger.trace(f"Slack Channel: {slack_channel}")
@@ -56,16 +57,19 @@ def fetch_slack_content(
     for slack_channel_id, slack_channel in slack_channels.items():
         logger.debug(f"Fetching Slack Channel Messages: {slack_channel_id}")
         slack_channel_messages = slack_channel.setdefault("messages", {})
-        slack_conversation_history = slack_client.conversations_history(
-            channel=channel_id,
-            oldest=str(start_date.timestamp()),
-            limit=fetch_slack_content_step_settings.max_messages_per_channel,
-        )
-        logger.debug(f"Fetched Slack Channel Messages: {slack_conversation_history['ok']}")
-        for slack_channel_message in slack_conversation_history["messages"]:
-            logger.trace(f"Slack Channel Message: {slack_channel_message}")
-            slack_channel_messages[slack_channel_message["ts"]] = slack_channel_message
-        logger.debug(f"Fetched Slack Channel Messages Count: {len(slack_channel_messages)}")
+        try:
+            slack_conversation_history = slack_client.conversations_history(
+                channel=slack_channel_id,
+                oldest=str(start_date.timestamp()),
+                limit=fetch_slack_content_step_settings.max_messages_per_channel,
+            )
+            logger.debug(f"Fetched Slack Channel Messages: {slack_conversation_history['ok']}")
+            for slack_channel_message in slack_conversation_history["messages"]:
+                logger.trace(f"Slack Channel Message: {slack_channel_message}")
+                slack_channel_messages[slack_channel_message["ts"]] = slack_channel_message
+            logger.debug(f"Fetched Slack Channel Messages Count: {len(slack_channel_messages)}")
+        except slack_errors.SlackApiError as slack_api_error:
+            logger.warning(f"Error while Fetching Slack Channel Messages: {slack_api_error}")
     # replies
     for slack_channel_id, slack_channel in slack_channels.items():
         logger.debug(f"Fetching Slack Channel Replies: {slack_channel_id}")
@@ -73,8 +77,8 @@ def fetch_slack_content(
             logger.debug(f"Fetching Slack Message Replies: {slack_message_ts}")
             slack_message_replies = slack_message.setdefault("replies", {})
             slack_message_thread = slack_client.conversations_replies(
-                channel=channel_id,
                 ts=slack_message_ts,
+                channel=slack_channel_id,
                 limit=fetch_slack_content_step_settings.max_replies_per_message,
             )
             logger.debug(f"Fetched Slack Message Replies: {slack_message_thread['ok']}")

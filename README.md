@@ -18,6 +18,8 @@ uv sync
 
 # Preparation
 
+You need to authenticate with [Pydantic Logfire](https://pydantic.dev/logfire):
+
 ```bash
 uv run logfire auth
 uv run logire projects new
@@ -25,30 +27,28 @@ uv run logire projects new
 
 # Usage
 
+To start the agent from command-line interface:
+
 ```bash
 uv run mlops-digester
 ```
 
-# Notes
+To start the agent from graphical user interface:
 
-- Installation: https://ai.pydantic.dev/install/
-  - slim install: https://ai.pydantic.dev/install/#slim-install
-    - packages to install
-- Troubleshooting: https://ai.pydantic.dev/troubleshooting/
-  - jupyter event loop: https://ai.pydantic.dev/troubleshooting/
-- Multiple agent delegation: https://ai.pydantic.dev/multi-agent-applications/
-- Graph: https://ai.pydantic.dev/graph/#mermaid-diagrams
-  - Super complex (similar to LangGraph), too complex for this use case
+```bash
+uv run mlops-digester-gui
+```
 
-# Ideas
+# Design
 
-- Sent a digest per channel or to the user on Slack?
-- Create a Slack AI Assistant: https://api.slack.com/docs/apps/ai
+## Modules
 
-# Limitations
+![Module](images/modules.png)
 
-- Configuration at the distance
-  - must wrap agents in function, not pydantic ai idiomatic
-- Advanced foundation models features
-  - e.g., Gemini 2.0 (audio, live API, ...)
-- Streaming challenges: https://ai.pydantic.dev/results/#streaming-structured-responses
+## Workflow
+
+![Workflow](images/workflows.png)
+
+## Pydantic AI
+
+![Pydantic AI](images/pydantic-ai.png)

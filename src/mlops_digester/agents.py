@@ -2,7 +2,6 @@
 
 # %% IMPORTS
 
-import os
 import typing as T
 
 import pydantic_ai as pdtai
@@ -17,16 +16,6 @@ SlackThreadDigestAgent: T.TypeAlias = pdtai.Agent[
 SlackWorkspaceDigestAgent: T.TypeAlias = pdtai.Agent[
     depends.SlackWorkspaceDepends, results.SlackWorkspaceDigest
 ]
-
-# %% FIXES
-
-# fixes jupyter notebook errors in VS Code:
-# https://ai.pydantic.dev/troubleshooting/#runtimeerror-this-event-loop-is-already-running
-
-if "VSCODE_PID" in os.environ:
-    import nest_asyncio
-
-    nest_asyncio.apply()
 
 # %% AGENTS
 
