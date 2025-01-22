@@ -5,7 +5,7 @@
 
 [project]
 name = "mlops-digester"
-version = "0.1.0"
+version = "1.0.0"
 description = "Let your agent digest MLOps information"
 authors = [{ name = "fmind" }]
 readme = "README.md"
